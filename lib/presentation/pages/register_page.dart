@@ -113,13 +113,12 @@ class _RegisterPageState extends State<RegisterPage> {
       });
 
       if (mounted) {
-        Navigator.pop(context);
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => const HomePage(),
-        //   ),
-        // );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {

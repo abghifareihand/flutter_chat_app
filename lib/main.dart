@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/core/components/loading_spinkit.dart';
 import 'package:flutter_chat_app/firebase_options.dart';
+import 'package:flutter_chat_app/presentation/pages/home_page.dart';
 import 'package:flutter_chat_app/presentation/pages/login_page.dart';
 
 void main() async {
@@ -23,7 +26,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff0BCAD4)),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingSpinkit();
+          }
+          if (snapshot.hasData) {
+            return const HomePage();
+          }
+          return const LoginPage();
+        },
+      ),
     );
   }
 }
